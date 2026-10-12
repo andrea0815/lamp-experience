@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Smythe&display=swap');
+@import "tailwindcss";
+
+@property --control-glow-primary-alpha {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+@property --control-glow-primary-blur {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --control-glow-secondary-alpha {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+@property --control-glow-secondary-blur {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+:root {
+  --color-creme-100: #ece7e2;
+  --color-beige-400: #D3AD9C;
+  --color-beige-600: #706059;
+
+  --color-yellow-500: #BEA551;
+  --color-aqua-500: #45897D;
+  --color-purple-500: #69408C;
+  
+  --shadow-1: 2px;
+  --shadow-2: 10px;
+  --shadow-1-opacity: 90%;
+  --shadow-2-opacity: 55%;
+
+  --hover-shadow-1: 2px;
+  --hover-shadow-2: 5px;
+  --hover-shadow-1-opacity: 50%;
+  --hover-shadow-2-opacity: 25%;
+}
+
+@theme {
+  --color-creme: var(--color-creme-100);
+  --color-beige-400: var(--color-beige-400);
+  --color-beige-600: var(--color-beige-600);
+  --color-off-white: var(--color-off-white);
+
+  --color-yellow-500: var(--color-yelow-500);
+  --color-purple-500: var(--color-purple-500);
+  --color-aqua-500: var(--color-aqua-500);
+
+  --font-base: "Smythe", serif;
+}
+
+@theme inline {
+  --color-text: var(--color-creme);
+  --color-btn-outline-default: var(--color-creme);
+  --color-btn-outline-hover: var(--color-beige);
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: black;
+    @apply font-base text-text;
+  }
+
+  p {
+    font-family: var(--font-base);
+  }
+
+  .control-button {
+    --control-glow-primary-alpha: 0%;
+    --control-glow-secondary-alpha: 0%;
+    --control-glow-primary-blur: var(--shadow-1);
+    --control-glow-secondary-blur: var(--shadow-2);
+    color: var(--color-beige-400);
+    filter:
+      drop-shadow(0 0 var(--control-glow-primary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-primary-alpha), transparent))
+      drop-shadow(0 0 var(--control-glow-secondary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-secondary-alpha), transparent));
+    transition:
+      color 240ms ease,
+      --control-glow-primary-blur 500ms ease,
+      --control-glow-primary-alpha 500ms ease,
+      --control-glow-secondary-blur 500ms ease,
+      --control-glow-secondary-alpha 500ms ease;
+  }
+
+  .control-button svg {
+    fill: transparent;
+    stroke: currentColor;
+    transition: fill 500ms ease, stroke 200ms ease;
+  }
+
+  .control-button:not(:disabled):hover,
+  .control-button:focus-visible {
+    color: var(--color-creme-100);
+    --control-glow-primary-blur: var(--hover-shadow-1);
+    --control-glow-primary-alpha: var(--hover-shadow-1-opacity);
+    --control-glow-secondary-blur: var(--hover-shadow-2);
+    --control-glow-secondary-alpha: var(--hover-shadow-2-opacity);
+    outline: none;
+  }
+
+  .control-button--active {
+    color: var(--color-creme-100);
+    --control-glow-primary-blur: var(--shadow-1);
+    --control-glow-primary-alpha: var(--shadow-1-opacity);
+    --control-glow-secondary-blur: var(--shadow-2);
+    --control-glow-secondary-alpha: var(--shadow-2-opacity);
+  }
+
+  .control-button--active svg {
+    fill: color-mix(in srgb, var(--color-beige-400) 10%, transparent);
+    stroke: var(--color-creme-100);
+  }
+
+  .control-button svg.color-swatch-outline {
+    fill: transparent;
+    stroke: currentColor;
+  }
+
+  .brightness-slider {
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  /* Track: one thin line */
+  .brightness-slider::-webkit-slider-runnable-track {
+    height: 1px;
+    background: currentColor;
+  }
+
+  .brightness-slider::-moz-range-track {
+    height: 1px;
+    background: currentColor;
+  }
+
+  /* Chrome, Edge, Safari */
+  .brightness-slider::-webkit-slider-thumb {
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -7.5px;
+    /* Centers it on your 1px track */
+    border: 1px solid currentColor;
+    border-radius: 0;
+    background: currentColor;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    cursor: grab;
+  }
+
+  /* Firefox */
+  .brightness-slider::-moz-range-thumb {
+    transition: all 0.2s ease-in-out;
+    width: 16px;
+    height: 16px;
+    border: 0;
+    border-radius: 0;
+    background: currentColor;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    cursor: grab;
+  }
+
+  .brightness-slider::-webkit-slider-thumb:hover {
+    filter: brightness(1.5);
+  }
+
+  .brightness-slider::-moz-range-thumb:hover {
+    filter: brightness(1.5);
+  }
+
+  .brightness-slider:active::-moz-range-thumb {
+    filter: brightness(1.5);
+    cursor: grabbing;
+  }
+
+  .brightness-slider:active::-webkit-slider-thumb {
+    filter: brightness(1.5);
+    cursor: grabbing;
+  }
+
+  .brightness-slider:active::-moz-range-thumb {
+    filter: brightness(1.5);
+    cursor: grabbing;
+  }
+}
