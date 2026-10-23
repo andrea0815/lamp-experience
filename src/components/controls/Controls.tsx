@@ -38,15 +38,7 @@ export default function Controls({
 }: ControlsProps) {
     return (
         <>
-            <div className="fixed top-3 right-5">
-                <JointControl
-                    currentJoint={currentJoint}
-                    disabled={!power}
-                    onNextJoint={onNextJoint}
-                />
-            </div>
-
-            <div className="flex gap-4 fixed top-3 left-5">
+            <div className="flex gap-4 fixed bottom-3 left-5">
                 <ButtonWrapper midSection padding="5px 8px" keys={["Space"]}>
                     <ButtonPower active={power} onClick={onPowerToggle} />
                 </ButtonWrapper>
@@ -63,6 +55,14 @@ export default function Controls({
                     open={brightnessPanelOpen}
                     onBrightnessChange={onBrightnessChange}
                     onOpenChange={onBrightnessPanelOpenChange}
+                />
+            </div>
+
+            <div className="fixed top-3 left-5">
+                <JointControl
+                    currentJoint={currentJoint}
+                    disabled={!power}
+                    onNextJoint={onNextJoint}
                 />
             </div>
         </>

@@ -3,6 +3,7 @@ import IconBrightness from "../svgs/IconBrightness";
 import BrightnessTab from "./BrightnessTab";
 import ButtonValue from "./ButtonValue";
 import ButtonWrapper from "./ButtonWrapper";
+import ButtonBrightness from "./ButtonBrightness";
 
 type BrightnessControlProps = {
     brightness: number;
@@ -80,14 +81,14 @@ export default function BrightnessControl({
                     <IconBrightness />
                 </div>
 
-                <ButtonValue
+                <ButtonBrightness
                     active={open}
                     ariaLabel={`Brightness: ${brightness}%`}
                     disabled={disabled}
                     onClick={() => onOpenChange(!open)}
                 >
                     <p>{brightness}%</p>
-                </ButtonValue>
+                </ButtonBrightness>
             </ButtonWrapper>
         </div>
     );

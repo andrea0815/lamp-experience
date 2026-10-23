@@ -26,23 +26,23 @@
 }
 
 :root {
-  --color-creme-100: #ece7e2;
-  --color-beige-400: #D3AD9C;
-  --color-beige-600: #706059;
+  --color-creme-100: #e0cbbd;
+  --color-beige-400: #a07866;
+  --color-beige-600: #5e493f;
 
   --color-yellow-500: #BEA551;
   --color-aqua-500: #45897D;
   --color-purple-500: #69408C;
-  
+
   --shadow-1: 2px;
-  --shadow-2: 10px;
-  --shadow-1-opacity: 90%;
-  --shadow-2-opacity: 55%;
+  --shadow-2: 5px;
+  --shadow-1-opacity: 50%;
+  --shadow-2-opacity: 25%;
 
   --hover-shadow-1: 2px;
-  --hover-shadow-2: 5px;
-  --hover-shadow-1-opacity: 50%;
-  --hover-shadow-2-opacity: 25%;
+  --hover-shadow-2: 10px;
+  --hover-shadow-1-opacity: 90%;
+  --hover-shadow-2-opacity: 55%;
 }
 
 @theme {
@@ -82,8 +82,7 @@
     --control-glow-secondary-blur: var(--shadow-2);
     color: var(--color-beige-400);
     filter:
-      drop-shadow(0 0 var(--control-glow-primary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-primary-alpha), transparent))
-      drop-shadow(0 0 var(--control-glow-secondary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-secondary-alpha), transparent));
+      drop-shadow(0 0 var(--control-glow-primary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-primary-alpha), transparent)) drop-shadow(0 0 var(--control-glow-secondary-blur) color-mix(in srgb, var(--color-creme-100) var(--control-glow-secondary-alpha), transparent));
     transition:
       color 240ms ease,
       --control-glow-primary-blur 500ms ease,
@@ -176,25 +175,25 @@
   }
 
   .brightness-slider::-webkit-slider-thumb:hover {
-    filter: brightness(1.5);
+    color: var(--color-creme-100);
   }
 
   .brightness-slider::-moz-range-thumb:hover {
-    filter: brightness(1.5);
+    color: var(--color-creme-100);
   }
 
   .brightness-slider:active::-moz-range-thumb {
-    filter: brightness(1.5);
+    color: var(--color-creme-100);
     cursor: grabbing;
   }
 
   .brightness-slider:active::-webkit-slider-thumb {
-    filter: brightness(1.5);
+    color: var(--color-creme-100);
     cursor: grabbing;
   }
 
   .brightness-slider:active::-moz-range-thumb {
-    filter: brightness(1.5);
+    color: var(--color-creme-100);
     cursor: grabbing;
   }
 }

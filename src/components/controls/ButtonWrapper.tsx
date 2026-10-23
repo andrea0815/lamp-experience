@@ -22,7 +22,7 @@ function ButtonWrapper({
 }: ButtonWrapperProps) {
     return (
         <div
-            className={`flex flex-col items-end gap-1 transition-opacity duration-300 ${disabled ? "opacity-30" : "opacity-100"}`}
+            className={`flex flex-col items-end gap-0 transition-opacity duration-300 ${disabled ? "opacity-30" : "opacity-100"}`}
             aria-disabled={disabled}
         >
             <div className="relative inline-flex w-fit text-beige-400">

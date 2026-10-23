@@ -20,12 +20,13 @@ export default function JointControl({
     return (
         <ButtonWrapper disabled={disabled} midSection={false} padding="5px 8px" keys={["E"]}>
             <ButtonValue
+                width="200px"
                 active={currentJoint !== null}
                 ariaLabel={currentJoint ? `Current joint: ${currentJoint.label}` : "Select joint"}
                 disabled={disabled}
                 onClick={onNextJoint}
             >
-                <p>{currentJoint?.label ?? "Joint"}</p>
+                <p>{currentJoint?.label ?? "Select Joint"}</p>
             </ButtonValue>
         </ButtonWrapper>
     );

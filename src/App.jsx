@@ -8,7 +8,7 @@ const JOINTS = [
   { id: "lamp", label: "Lamp" },
 ];
 
-const JOINT_RESET_DELAY = 10_000;
+const JOINT_RESET_DELAY = 5_000;
 
 function App() {
   const [power, setPower] = useState(false);
