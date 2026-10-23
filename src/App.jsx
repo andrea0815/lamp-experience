@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Controls from "./components/controls/Controls";
+import Scene from "./components/r3f/Scene";
 
 const JOINTS = [
   { id: "base", label: "Base" },
@@ -121,18 +122,22 @@ function App() {
   }, [changeBrightness, changeColor, power, selectNextJoint, togglePower]);
 
   return (
-    <Controls
-      power={power}
-      color={color}
-      brightness={brightness}
-      brightnessPanelOpen={brightnessPanelOpen}
-      currentJoint={currentJoint}
-      onPowerToggle={togglePower}
-      onColorChange={changeColor}
-      onBrightnessChange={setBrightnessValue}
-      onBrightnessPanelOpenChange={setBrightnessPanelOpen}
-      onNextJoint={selectNextJoint}
-    />
+    <>
+      <Controls
+        power={power}
+        color={color}
+        brightness={brightness}
+        brightnessPanelOpen={brightnessPanelOpen}
+        currentJoint={currentJoint}
+        onPowerToggle={togglePower}
+        onColorChange={changeColor}
+        onBrightnessChange={setBrightnessValue}
+        onBrightnessPanelOpenChange={setBrightnessPanelOpen}
+        onNextJoint={selectNextJoint}
+      />
+
+      <Scene />
+    </>
   );
 }
 

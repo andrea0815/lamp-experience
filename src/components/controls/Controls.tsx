@@ -38,7 +38,7 @@ export default function Controls({
 }: ControlsProps) {
     return (
         <>
-            <div className="flex gap-4 fixed bottom-3 left-5">
+            <div className="flex gap-4 fixed bottom-3 left-5 z-50">
                 <ButtonWrapper midSection padding="5px 8px" keys={["Space"]}>
                     <ButtonPower active={power} onClick={onPowerToggle} />
                 </ButtonWrapper>
@@ -58,7 +58,7 @@ export default function Controls({
                 />
             </div>
 
-            <div className="fixed top-3 left-5">
+            <div className="fixed top-3 left-5 z-50">
                 <JointControl
                     currentJoint={currentJoint}
                     disabled={!power}
