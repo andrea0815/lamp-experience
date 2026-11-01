@@ -12,7 +12,7 @@ export default function RotatingBox() {
     })
 
     return (
-        <mesh ref={meshRef}>
+        <mesh ref={meshRef} position={[2, 1, 0]}>
             <boxGeometry args={[1, 1, 1]} />
             <meshStandardMaterial color="orange" />
         </mesh>
