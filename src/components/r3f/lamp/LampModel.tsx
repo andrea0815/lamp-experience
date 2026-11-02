@@ -15,6 +15,7 @@ import useBulbGlow from './useBulbGlow'
 import useLampGui from './useLampGui'
 import useLampMaterials from './useLampMaterials'
 import useLampRigAnimation from './useLampRigAnimation'
+import useLampFlicker from './useLampFlicker'
 
 type LampModelProps = {
   power: boolean
@@ -35,10 +36,16 @@ export default function LampModel({ power, color, brightness, jointTargets }: La
   )
   Object.assign(jointValues, jointTargets)
 
+  const flicker = useLampFlicker({
+    color,
+    brightness,
+    power,
+  })
+
   useLampMaterials(scene)
   useLampGui(jointValues, beam, light, pendulum)
   const powerLevel = useLampRigAnimation(scene, power, jointValues, pendulum)
-  useBulbGlow(scene, color, brightness, light, powerLevel)
+  useBulbGlow(scene, color, brightness, light, powerLevel, flicker)
 
   const shadeBone = useMemo(() => scene.getObjectByName(PENDULUM_BONE), [scene])
 
@@ -58,6 +65,7 @@ export default function LampModel({ power, color, brightness, jointTargets }: La
           color={color}
           brightness={brightness}
           powerLevel={powerLevel}
+          flicker={flicker}
         />
       )}
     </>

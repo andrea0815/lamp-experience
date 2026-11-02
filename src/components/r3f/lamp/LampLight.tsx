@@ -1,4 +1,4 @@
-import { type MutableRefObject, useLayoutEffect, useMemo, useRef } from 'react'
+import { type RefObject, useLayoutEffect, useMemo, useRef } from 'react'
 import { useHelper } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -12,11 +12,12 @@ type LampLightProps = {
   settings: LampLightSettings
   color: LampColor
   brightness: number
-  powerLevel: MutableRefObject<number>
+  powerLevel: RefObject<number>
+  flicker: RefObject<number>
 }
 
-export default function LampLight({ anchor, debug, beam, settings, color, brightness, powerLevel }: LampLightProps) {
-  const light = useRef<THREE.SpotLight>(null)
+export default function LampLight({ anchor, debug, beam, settings, color, brightness, powerLevel, flicker }: LampLightProps) {
+  const light = useRef<THREE.SpotLight>(null!)
   const beamMesh = useRef<THREE.Mesh>(null)
   const beamMaterial = useRef<THREE.ShaderMaterial>(null)
   const target = useMemo(() => new THREE.Object3D(), [])
@@ -45,29 +46,55 @@ export default function LampLight({ anchor, debug, beam, settings, color, bright
   }, [target])
 
   useFrame(() => {
-    const level = THREE.MathUtils.clamp(brightness / 100, 0.1, 1)
-    anchor.localToWorld(lightPosition.set(0, settings.lightOffset, 0))
-    anchor.localToWorld(beamPosition.set(0, settings.beamOffset, 0))
-    anchor.localToWorld(targetPosition.set(0, 6, 0))
+    const level = THREE.MathUtils.clamp(
+      brightness / 100,
+      0.1,
+      1
+    )
+
+    const intensity =
+      level * powerLevel.current * flicker.current
+
+    anchor.localToWorld(
+      lightPosition.set(0, settings.lightOffset, 0)
+    )
+    anchor.localToWorld(
+      beamPosition.set(0, settings.beamOffset, 0)
+    )
+    anchor.localToWorld(
+      targetPosition.set(0, 6, 0)
+    )
 
     if (light.current) {
       light.current.position.copy(lightPosition)
       light.current.color.set(settings.spotlightColors[color])
-      light.current.intensity = settings.intensity * level * powerLevel.current
+      light.current.intensity =
+        settings.intensity * intensity
     }
+
     target.position.copy(targetPosition)
     target.updateMatrixWorld()
 
     if (beamMaterial.current) {
-      beamMaterial.current.uniforms.uBeamOpacity.value = beam.opacity * level * powerLevel.current
-      beamMaterial.current.uniforms.uBeamFadeEnd.value = beam.fadeEnd
-      beamMaterial.current.uniforms.uBeamFadePower.value = beam.fadePower
-      beamMaterial.current.uniforms.uBeamColor.value.set(settings.beamColors[color])
+      const uniforms = beamMaterial.current.uniforms
+
+      uniforms.uBeamOpacity.value =
+        beam.opacity * intensity
+
+      uniforms.uBeamFadeEnd.value = beam.fadeEnd
+      uniforms.uBeamFadePower.value = beam.fadePower
+      uniforms.uBeamColor.value.set(settings.beamColors[color])
     }
+
     if (beamMesh.current) {
       direction.copy(targetPosition).sub(beamPosition)
       const length = Math.min(5, direction.length())
-      quaternion.setFromUnitVectors(up, direction.normalize())
+
+      quaternion.setFromUnitVectors(
+        up,
+        direction.normalize()
+      )
+
       beamMesh.current.position.copy(beamPosition)
       beamMesh.current.quaternion.copy(quaternion)
       beamMesh.current.scale.set(1, length, 1)
