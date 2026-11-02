@@ -1,0 +1,1 @@
+vLampShadeHeight = position.y;

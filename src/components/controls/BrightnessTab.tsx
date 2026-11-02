@@ -29,7 +29,7 @@ function BrightnessTab({
                 aria-label="Brightness"
                 type="range"
                 disabled={disabled}
-                min={0}
+                min={10}
                 max={100}
                 step={1}
                 value={brightness}

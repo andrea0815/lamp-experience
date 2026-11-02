@@ -1,19 +1,23 @@
-
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
-import RotatingBox from './RotationBox'
+import type { LampColor } from '../../config/lamp'
+import LampModel from './lamp/LampModel'
+import SceneEnvironment from './SceneEnvironment'
+import SelectionOutline from './SelectionOutline'
 
-export default function Scene() {
+type SceneProps = {
+  power: boolean
+  color: LampColor
+  brightness: number
+  jointTargets: Record<string, number>
+  selectedJoint: string | null
+}
+
+export default function Scene(props: SceneProps) {
   return (
-    <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-      <color attach="background" args={['#111111']} />
-
-      <ambientLight intensity={0.2} />
-      <directionalLight position={[-5, 5, -5]} intensity={2} />
-
-      <RotatingBox />
-
-      <OrbitControls />
+    <Canvas camera={{ position: [3, 3, 3], fov: 50 }} shadows>
+      <SceneEnvironment />
+      <LampModel {...props} />
+      <SelectionOutline selectedJoint={props.selectedJoint} />
     </Canvas>
   )
 }
