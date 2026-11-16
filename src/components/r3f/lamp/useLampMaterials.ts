@@ -6,6 +6,17 @@ export default function useLampMaterials(scene: THREE.Object3D) {
   useLayoutEffect(() => {
     scene.traverse((object) => {
       if (!(object instanceof THREE.Mesh)) return
+
+      object.frustumCulled = false
+
+      if (object.name.includes('Collider')) {
+        object.visible = false
+        object.castShadow = false
+        object.receiveShadow = false
+        object.raycast = () => null
+        return
+      }
+
       object.castShadow = object.name !== 'Lamp_Bulb'
       object.receiveShadow = true
 

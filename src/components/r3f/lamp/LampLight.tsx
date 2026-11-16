@@ -28,7 +28,7 @@ export default function LampLight({ anchor, debug, beam, settings, color, bright
   const quaternion = useMemo(() => new THREE.Quaternion(), [])
   const up = useMemo(() => new THREE.Vector3(0, 1, 0), [])
   const geometry = useMemo(() => {
-    const cylinder = new THREE.CylinderGeometry(1.4, 0.07, 1, 32, 1, true)
+    const cylinder = new THREE.CylinderGeometry(4, 0.02, 1, 32, 1, true)
     cylinder.translate(0, 0.5, 0)
     return cylinder
   }, [])

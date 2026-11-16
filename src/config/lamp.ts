@@ -35,7 +35,7 @@ export type PendulumSettings = {
 }
 
 export const JOINT_SELECTION_TIMEOUT_MS = 5_000
-export const PENDULUM_BONE = 'Lamp_Shade001'
+export const PENDULUM_BONE = 'Lamp_Shade'
 
 export const LAMP_JOINTS: JointConstraint[] = [
   { bone: 'Base_Rotation', label: 'Base Rotation', axis: 'y', min: -180, max: 180, step: 1, initial: 0, isLooping: true },
@@ -52,14 +52,14 @@ export const CONTROLLABLE_JOINTS = LAMP_JOINTS.filter(
 )
 
 export function createBeamSettings(): BeamSettings {
-  return { fadeEnd: 0.6, fadePower: 4.5, opacity: 0.6 }
+  return { fadeEnd: 0.25, fadePower: 4.5, opacity: 0.5 }
 }
 
 export function createLightSettings(): LampLightSettings {
   return {
     intensity: 100,
-    lightOffset: 1,
-    beamOffset: 0.5,
+    lightOffset: 0.25,
+    beamOffset: 0.25,
     spotlightColors: { red: '#ffc88a', blue: '#c8b3ff', green: '#80e5ff' },
     beamColors: { red: '#ffc266', blue: '#a78aff', green: '#a0ffec' },
   }
