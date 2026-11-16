@@ -56,20 +56,8 @@ export default function useLampFlicker({
             nextChange.current =
                 frequency + Math.random() * frequency * 3
 
-            // Mostly subtle fluctuations, occasionally strong dips
-            const random = Math.random()
-            const isDrop = random < 0.12 + activity * 0.38
-
-            if (isDrop) {
-                target.current = THREE.MathUtils.lerp(
-                    0.7,
-                    0.15,
-                    activity
-                ) + Math.random() * 0.2
-            } else {
-                target.current =
-                    0.94 + Math.random() * 0.08
-            }
+            const variation = THREE.MathUtils.lerp(0.02, 0.05, activity)
+            target.current = 1 - variation + Math.random() * variation * 2
         }
 
         // Fast but smooth transitions

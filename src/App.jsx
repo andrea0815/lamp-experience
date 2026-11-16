@@ -28,6 +28,8 @@ export default function App() {
         brightness={lamp.brightness}
         jointTargets={lamp.jointTargets}
         selectedJoint={lamp.currentJoint?.bone ?? null}
+        onJointSelect={lamp.selectJoint}
+        onJointConstrain={lamp.constrainJointTarget}
       />
     </>
   );

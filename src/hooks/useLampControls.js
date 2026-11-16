@@ -72,6 +72,20 @@ export default function useLampControls() {
     refreshSelectionTimer();
   }, [power, refreshSelectionTimer]);
 
+  const selectJoint = useCallback((bone) => {
+    if (!power) return;
+    const joint = CONTROLLABLE_JOINTS.find((candidate) => candidate.bone === bone);
+    if (!joint) return;
+    setCurrentJoint(joint);
+    refreshSelectionTimer();
+  }, [power, refreshSelectionTimer]);
+
+  const constrainJointTarget = useCallback((bone, value) => {
+    setJointTargets((targets) => Math.abs(targets[bone] - value) < 0.001
+      ? targets
+      : { ...targets, [bone]: value });
+  }, []);
+
   const rotateCurrentJoint = useCallback((amount) => {
     if (!power || !currentJoint) return;
     setJointTargets((targets) => {
@@ -170,5 +184,7 @@ export default function useLampControls() {
     setBrightnessValue,
     changeBrightnessPanel,
     selectNextJoint,
+    selectJoint,
+    constrainJointTarget,
   };
 }

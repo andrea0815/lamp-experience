@@ -10,6 +10,8 @@ type SceneProps = {
   brightness: number
   jointTargets: Record<string, number>
   selectedJoint: string | null
+  onJointSelect: (bone: string) => void
+  onJointConstrain: (bone: string, value: number) => void
 }
 
 export default function Scene(props: SceneProps) {

@@ -8,7 +8,7 @@ type LampShadeFadeOptions = {
 }
 
 export function applyLampShadeFade(
-  material: THREE.MeshStandardMaterial,
+  material: THREE.MeshBasicMaterial | THREE.MeshStandardMaterial,
   geometry: THREE.BufferGeometry,
   { fadeStart = 0, fadeEnd = 1 }: LampShadeFadeOptions = {},
 ) {
@@ -52,6 +52,6 @@ export function applyLampShadeFade(
         `${lampShadeFragmentChunk}\n#include <opaque_fragment>`,
       )
   }
-  material.customProgramCacheKey = () => 'lamp-shade-height-fade-v1'
+  material.customProgramCacheKey = () => `lamp-shade-height-fade-v1-${material.type}`
   material.needsUpdate = true
 }

@@ -5,6 +5,8 @@ import * as THREE from 'three'
 import type { BeamSettings, LampColor, LampLightSettings } from '../../../config/lamp'
 import { lightBeamFragmentShader, lightBeamVertexShader } from '../../../shaders/lightBeam'
 
+const MODEL_UNIT_SCALE = 0.33727035
+
 type LampLightProps = {
   anchor: THREE.Object3D
   debug: boolean
@@ -13,10 +15,9 @@ type LampLightProps = {
   color: LampColor
   brightness: number
   powerLevel: RefObject<number>
-  flicker: RefObject<number>
 }
 
-export default function LampLight({ anchor, debug, beam, settings, color, brightness, powerLevel, flicker }: LampLightProps) {
+export default function LampLight({ anchor, debug, beam, settings, color, brightness, powerLevel }: LampLightProps) {
   const light = useRef<THREE.SpotLight>(null!)
   const beamMesh = useRef<THREE.Mesh>(null)
   const beamMaterial = useRef<THREE.ShaderMaterial>(null)
@@ -52,24 +53,22 @@ export default function LampLight({ anchor, debug, beam, settings, color, bright
       1
     )
 
-    const intensity =
-      level * powerLevel.current * flicker.current
+    const intensity = level * powerLevel.current
 
     anchor.localToWorld(
-      lightPosition.set(0, settings.lightOffset, 0)
+      lightPosition.set(0, settings.lightOffset * MODEL_UNIT_SCALE, 0)
     )
     anchor.localToWorld(
-      beamPosition.set(0, settings.beamOffset, 0)
+      beamPosition.set(0, settings.beamOffset * MODEL_UNIT_SCALE, 0)
     )
     anchor.localToWorld(
-      targetPosition.set(0, 6, 0)
+      targetPosition.set(0, 6 * MODEL_UNIT_SCALE, 0)
     )
 
     if (light.current) {
       light.current.position.copy(lightPosition)
       light.current.color.set(settings.spotlightColors[color])
-      light.current.intensity =
-        settings.intensity * intensity
+      light.current.intensity = settings.intensity * intensity
     }
 
     target.position.copy(targetPosition)
@@ -103,7 +102,20 @@ export default function LampLight({ anchor, debug, beam, settings, color, bright
 
   return (
     <>
-      <spotLight ref={light} castShadow intensity={0} distance={5} angle={0.8} penumbra={0.65} decay={2} shadow-bias={-0.0005} />
+      <spotLight
+        ref={light}
+        castShadow
+        intensity={0}
+        distance={5}
+        angle={0.8}
+        penumbra={0.65}
+        decay={2}
+        shadow-bias={-0.0002}
+        shadow-normalBias={0.005}
+        shadow-camera-near={0.01}
+        shadow-camera-far={5}
+        shadow-mapSize={[2048, 2048]}
+      />
       <primitive object={target} />
       <mesh ref={beamMesh} geometry={geometry} raycast={() => null}>
         <shaderMaterial ref={beamMaterial} vertexShader={lightBeamVertexShader} fragmentShader={lightBeamFragmentShader} uniforms={uniforms} transparent blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} toneMapped={false} fog={false} />

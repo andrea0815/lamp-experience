@@ -9,7 +9,6 @@ export default function useBulbGlow(
   brightness: number,
   light: LampLightSettings,
   powerLevel: RefObject<number>,
-  flicker: RefObject<number>
 ) {
   useFrame(() => {
     const bulb = scene.getObjectByName('Lamp_Bulb')
@@ -18,7 +17,7 @@ export default function useBulbGlow(
     materials.forEach((material) => {
       if (!(material instanceof THREE.MeshStandardMaterial)) return
       material.emissive.set(light.spotlightColors[color])
-      material.emissiveIntensity = 2.5 * THREE.MathUtils.clamp(brightness / 100, 0.1, 1) * powerLevel.current *  flicker.current
+      material.emissiveIntensity = 2.5 * THREE.MathUtils.clamp(brightness / 100, 0.1, 1) * powerLevel.current
     })
   })
 }

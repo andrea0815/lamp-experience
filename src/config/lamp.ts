@@ -35,7 +35,7 @@ export type PendulumSettings = {
 }
 
 export const JOINT_SELECTION_TIMEOUT_MS = 5_000
-export const PENDULUM_BONE = 'Lamp_Shade001'
+export const PENDULUM_BONE = 'Lamp_Shade'
 
 export const LAMP_JOINTS: JointConstraint[] = [
   { bone: 'Base_Rotation', label: 'Base Rotation', axis: 'y', min: -180, max: 180, step: 1, initial: 0, isLooping: true },
